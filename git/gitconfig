@@ -1,0 +1,29 @@
+[user]
+  name = Vadim Mychko
+  email = v.mychko@make.com
+
+[init]
+  defaultBranch = main
+
+[diff]
+  tool = nvimdiff
+  colorMoved = default
+
+[difftool]
+  prompt = false
+
+[core]
+  pager = delta --paging=always
+
+[interactive]
+  diffFilter = delta --color-only --diff-so-fancy
+
+[merge]
+  conflictstyle = diff3
+
+[delta]
+  navigate = true
+  true-color = always
+
+[commit]
+  template = ~/.gitcommit

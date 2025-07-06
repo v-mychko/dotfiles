@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+SCRIPT_PATH=$(realpath "$0")
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+
+"$SCRIPT_DIR/alacritty/symlink"
+"$SCRIPT_DIR/bat/symlink"
+"$SCRIPT_DIR/git/symlink"
+"$SCRIPT_DIR/ipython/symlink"
+"$SCRIPT_DIR/nvim/symlink"
+"$SCRIPT_DIR/tmux/symlink"
+"$SCRIPT_DIR/wezterm/symlink"
+"$SCRIPT_DIR/zsh/symlink"

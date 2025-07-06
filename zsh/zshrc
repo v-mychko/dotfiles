@@ -1,0 +1,169 @@
+# https://youtu.be/ud7YxC33Z3w?si=0XJlozgWevORbcph
+# https://stackoverflow.com/a/24237590
+# https://unix.stackexchange.com/a/97844
+# https://www.youtube.com/watch?v=mmqDYw9C30I
+
+# Only execute this file once per shell.
+if [ -n "$__ETC_ZSHRC_SOURCED" -o -n "$NOSYSZSHRC" ]; then return; fi
+__ETC_ZSHRC_SOURCED=1
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Set zsh options.
+setopt HIST_IGNORE_DUPS SHARE_HISTORY HIST_FCNTL_LOCK
+
+# Configure sane keyboard defaults.
+source "$HOME/.zinputrc"
+
+# Enable autocompletion.
+autoload -U compinit && compinit
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+ZSH_CONFIG_DIR="$CONFIG_DIR/zsh"
+
+source "$ZSH_CONFIG_DIR/p10k/powerlevel10k.zsh-theme"
+source "$ZSH_CONFIG_DIR/fzf_tab/fzf-tab.plugin.zsh"
+source "$HOME/.p10k.zsh"
+
+# ================================== ALIASES ==================================
+alias vi='nvim'
+alias vim='nvim'
+alias vimdiff='nvim -d'
+alias lg='lazygit'
+alias cat='bat'
+
+alias ga='git add'
+alias gs='git status'
+alias gc='git commit'
+alias gp='git push'
+alias gd='git diff'
+alias gb='git branch'
+
+alias l='ls -lah'
+alias ll='ls -l'
+alias ls='ls --color=tty'
+
+# ================================= VARIABLES =================================
+export EDITOR='nvim'
+export BAT_THEME='modus_vivendi'
+export BAT_PAGER='less -+F -R'
+export MANPAGER='nvim +Man!'
+export XCURSOR_THEME=Adwaita
+export LESS=
+
+# ================================= FUNCTIONS =================================
+function print-colors() {
+  color_names=(
+    "Black" "Red" "Green" "Yellow" "Blue" "Magenta" "Cyan" "White"
+    "Bright Black" "Bright Red" "Bright Green" "Bright Yellow"
+    "Bright Blue" "Bright Magenta" "Bright Cyan" "Bright White"
+  )
+
+  for i in {0..15}; do
+    if [ $i -lt 10 ]; then
+      index=" $i"
+    else
+      index=$i
+    fi
+
+    tput setaf $i
+    echo "Color $index (${color_names[$(expr $i + 1)]})"
+  done
+
+  tput sgr0
+}
+
+function print-colormap() {
+  for i in {0..255}; do
+    print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'};
+  done
+}
+
+function diff2html() {
+  diff -u $1 $2 \
+  | delta --no-gitconfig --file-decoration-style=blue --hunk-header-decoration-style=blue --syntax-theme=GitHub \
+  | ansifilter --html
+}
+
+# ============================== AUTO COMPLETION ==============================
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+
+# ================================== HISTORY ==================================
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=$HOME/.zsh_history
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+zmodload zsh/terminfo
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
+bindkey "$terminfo[kcuu1]" history-beginning-search-backward-end
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[OA" history-beginning-search-backward-end
+
+bindkey "$terminfo[kcud1]" history-beginning-search-forward-end
+bindkey "^[[B" history-beginning-search-forward-end
+bindkey "^[OB" history-beginning-search-forward-end
+
+# ================================= VIM MODE ==================================
+bindkey -v
+export KEYTIMEOUT=1
+
+# ============================== INITIALIZATION ===============================
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+eval "$(direnv hook zsh)"
+
+fzf_preview="if [ -d {} ]; then eza -T -L=2 --color=always {}; else bat -n --color=always {}; fi"
+
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --follow --exclude .git"
+export FZF_CTRL_T_OPTS="--preview '$fzf_preview'"
+export FZF_ALT_C_OPTS="--preview 'eza -T -L=2 --color=always {}'"
+
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude .git . "$1"
+}
+
+_fzf_compgen_dir() {
+  fd --type=d --hidden --follow --exclude .git . "$1"
+}
+
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza -T -L=2 --color=always {}' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$' {}"             "$@" ;;
+    ssh)          fzf --preview 'dig {}'                        "$@" ;;
+    *)            fzf --preview "$fzf_preview"                  "$@" ;;
+  esac
+}
+
+# Setup prompt.
+# Note that to manually override this in ~/.zshrc you should run `prompt off`
+# before setting your PS1 and etc. Otherwise this will likely to interact with
+# your ~/.zshrc configuration in unexpected ways as the default prompt sets
+# a lot of different prompt variables.
+autoload -U promptinit && promptinit && prompt suse && setopt prompt_sp
+
+# Disable some features to support TRAMP.
+if [ "$TERM" = dumb ]; then
+    unsetopt zle prompt_cr prompt_subst
+    unset RPS1 RPROMPT
+    PS1='$ '
+    PROMPT='$ '
+fi

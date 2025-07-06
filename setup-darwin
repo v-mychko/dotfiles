@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+brew install --cask            \
+  font-jetbrains-mono          \
+  font-meslo-for-powerlevel10k \
+  font-noto-serif              \
+  font-noto-sans               \
+  font-noto-color-emoji        \
+  wezterm                      \
+  alacritty                    \
+  visual-studio-code
+
+brew install           \
+  zsh                  \
+  git                  \
+  tmux                 \
+  zoxide               \
+  sshfs                \
+  fzf                  \
+  fd                   \
+  jq                   \
+  bat                  \
+  git-delta            \
+  ripgrep              \
+  lazygit              \
+  eza                  \
+  tree                 \
+  ansifilter           \
+  docker               \
+  direnv               \
+  neovim               \
+  age                  \
+  pyenv                \
+  poetry               \
+  luarocks             \
+  npm

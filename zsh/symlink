@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+SCRIPT_PATH=$(realpath "$0")
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+CONFIG_DIR="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+ZSH_CONFIG_DIR="$CONFIG_DIR/zsh"
+
+mkdir -pv "$ZSH_CONFIG_DIR"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CONFIG_DIR/p10k"
+git clone --depth=1 https://github.com/Aloxaf/fzf-tab.git "$ZSH_CONFIG_DIR/fzf_tab"
+
+ln -sv "$SCRIPT_DIR/zshrc" "$HOME/.zshrc"
+ln -sv "$SCRIPT_DIR/zinputrc" "$HOME/.zinputrc"
+ln -sv "$SCRIPT_DIR/p10k.zsh" "$HOME/.p10k.zsh"
