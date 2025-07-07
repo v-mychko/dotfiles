@@ -86,10 +86,10 @@ config.keys = {
   { key = "7",          mods = "LEADER", action = wezterm.action { ActivateTab = 6 } },
   { key = "8",          mods = "LEADER", action = wezterm.action { ActivateTab = 7 } },
   { key = "9",          mods = "LEADER", action = wezterm.action { ActivateTab = 8 } },
-  { key = "LeftArrow",  mods = "ALT",    action = wezterm.action { ActivatePaneDirection = "Left" } },
-  { key = "DownArrow",  mods = "ALT",    action = wezterm.action { ActivatePaneDirection = "Down" } },
-  { key = "UpArrow",    mods = "ALT",    action = wezterm.action { ActivatePaneDirection = "Up" } },
-  { key = "RightArrow", mods = "ALT",    action = wezterm.action { ActivatePaneDirection = "Right" } },
+  { key = "LeftArrow",  mods = "CMD",    action = wezterm.action { ActivatePaneDirection = "Left" } },
+  { key = "DownArrow",  mods = "CMD",    action = wezterm.action { ActivatePaneDirection = "Down" } },
+  { key = "UpArrow",    mods = "CMD",    action = wezterm.action { ActivatePaneDirection = "Up" } },
+  { key = "RightArrow", mods = "CMD",    action = wezterm.action { ActivatePaneDirection = "Right" } },
 
   {
     key = "w",
