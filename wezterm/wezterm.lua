@@ -90,6 +90,15 @@ config.keys = {
   { key = "DownArrow",  mods = "CMD",    action = wezterm.action { ActivatePaneDirection = "Down" } },
   { key = "UpArrow",    mods = "CMD",    action = wezterm.action { ActivatePaneDirection = "Up" } },
   { key = "RightArrow", mods = "CMD",    action = wezterm.action { ActivatePaneDirection = "Right" } },
+  { key = "1",          mods = "CMD",    action = wezterm.action.SendKey { key = "1", mods = "ALT" } },
+  { key = "2",          mods = "CMD",    action = wezterm.action.SendKey { key = "2", mods = "ALT" } },
+  { key = "3",          mods = "CMD",    action = wezterm.action.SendKey { key = "3", mods = "ALT" } },
+  { key = "4",          mods = "CMD",    action = wezterm.action.SendKey { key = "4", mods = "ALT" } },
+  { key = "5",          mods = "CMD",    action = wezterm.action.SendKey { key = "5", mods = "ALT" } },
+  { key = "6",          mods = "CMD",    action = wezterm.action.SendKey { key = "6", mods = "ALT" } },
+  { key = "7",          mods = "CMD",    action = wezterm.action.SendKey { key = "7", mods = "ALT" } },
+  { key = "8",          mods = "CMD",    action = wezterm.action.SendKey { key = "8", mods = "ALT" } },
+  { key = "9",          mods = "CMD",    action = wezterm.action.SendKey { key = "9", mods = "ALT" } },
 
   {
     key = "w",
