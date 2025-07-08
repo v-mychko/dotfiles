@@ -8,6 +8,7 @@ if [ -n "$__ETC_ZSHRC_SOURCED" -o -n "$NOSYSZSHRC" ]; then return; fi
 __ETC_ZSHRC_SOURCED=1
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
 
 # Set zsh options.
 setopt HIST_IGNORE_DUPS SHARE_HISTORY HIST_FCNTL_LOCK
