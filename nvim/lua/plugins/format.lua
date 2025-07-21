@@ -10,7 +10,9 @@ return {
         c = { "clang-format" },
         cpp = { "clang-format" },
         yaml = { "yamlfmt" },
-        json = { "deno_fmt" },
+        json = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
       },
     })
 

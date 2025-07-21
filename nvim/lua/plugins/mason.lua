@@ -24,7 +24,7 @@ return {
         "basedpyright",
         "yamlls",
         "lua_ls",
-        "denols",
+        "ts_ls",
       },
     })
 
@@ -33,6 +33,7 @@ return {
         "ruff",
         "yamlfmt",
         "clang-format",
+        "prettierd",
       },
     })
   end,
