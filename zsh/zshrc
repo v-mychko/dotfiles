@@ -86,6 +86,10 @@ function diff2html() {
   | ansifilter --html
 }
 
+function gdiff() {
+  diff -u $1 $2 | delta
+}
+
 # ============================== AUTO COMPLETION ==============================
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
